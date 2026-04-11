@@ -1,0 +1,10 @@
+# Arquivos de variáveis de ambiente
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# Caso use docker ou outros ambientes
+.env.*
+!.env.example

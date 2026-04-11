@@ -580,4 +580,80 @@ const voltar = () => router.push('/')
   color: #0d6efd;
   margin-bottom: 15px;
 }
+
+/* ESTILIZAÇÃO DA TELA FINAL (Botoes) */
+.final-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-top: 30px;
+  width: 100%;
+}
+
+.btn-voltar-primario,
+.btn-voltar-secundario {
+  padding: 16px 24px;
+  font-size: 1.05rem;
+  font-weight: 700;
+  border-radius: 16px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  transition: all 0.2s;
+  width: 100%;
+  border: none;
+}
+
+.btn-voltar-primario {
+  background-color: #0284c7;
+  color: white;
+}
+
+.btn-voltar-primario:hover {
+  background-color: #0369a1;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(2, 132, 199, 0.3);
+}
+
+.btn-voltar-secundario {
+  background-color: #f1f5f9;
+  color: #475569;
+  border: 1px solid #e2e8f0;
+}
+
+.btn-voltar-secundario:hover {
+  background-color: #e2e8f0;
+  color: #1e293b;
+}
+
+.trophy-icon {
+  font-size: 4rem;
+  color: #f59e0b;
+  margin-bottom: 15px;
+}
+
+.pontuacao-final {
+  font-size: 1.2rem;
+  color: #475569;
+  margin-bottom: 10px;
+}
+
+.pontuacao-final strong {
+  color: #0284c7;
+}
+
+@media (max-width: 600px) {
+  .final-actions {
+    margin-top: auto;
+    padding-bottom: 20px;
+  }
+
+  .btn-voltar-primario,
+  .btn-voltar-secundario {
+    padding: 14px 20px;
+    font-size: 1rem;
+  }
+}
 </style>

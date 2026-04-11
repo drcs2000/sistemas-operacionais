@@ -114,6 +114,7 @@
 import { ref, computed, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
 import { quizStore } from '../store/quizStore'
+import { rankingStore } from '../store/rankingStore'
 
 const router = useRouter()
 
@@ -145,6 +146,7 @@ onMounted(async () => {
   indiceAtual.value = quizStore.indiceSalvo || 0
   acertos.value = quizStore.acertosSalvos || 0
   respondidas.value = quizStore.respondidasSalvos || 0
+
   if (indiceAtual.value >= totalPerguntas.value && totalPerguntas.value > 0) {
     jogoFinalizado.value = true
   }
@@ -155,9 +157,12 @@ const checarResposta = (id) => {
   idSelecionado.value = id
   respondidoNestaQuestao.value = true
   respondidas.value++
+
   if (id === perguntaAtual.value.resposta_correta) acertos.value++
+
   quizStore.salvarProgresso(indiceAtual.value, acertos.value, respondidas.value)
-  setTimeout(() => {
+
+  setTimeout(async () => {
     if (indiceAtual.value < totalPerguntas.value - 1) {
       indiceAtual.value++
       respondidoNestaQuestao.value = false
@@ -167,6 +172,9 @@ const checarResposta = (id) => {
     } else {
       jogoFinalizado.value = true
       quizStore.limparProgresso()
+
+      const nomeJogador = localStorage.getItem('quiz_nome_jogador') || 'Anônimo'
+      await rankingStore.salvarPontuacao(nomeJogador, acertos.value)
     }
   }, 1200)
 }
@@ -182,6 +190,7 @@ const confirmarReiniciar = () => {
   quizStore.limparProgresso()
   window.location.reload()
 }
+
 const LIMITE = 120
 const precisaLerMais = computed(() => (perguntaAtual.value?.enunciado?.length || 0) > LIMITE)
 const enunciadoExibido = computed(() => {
@@ -190,6 +199,7 @@ const enunciadoExibido = computed(() => {
     ? perguntaAtual.value.enunciado.substring(0, LIMITE) + '...'
     : perguntaAtual.value.enunciado
 })
+
 const voltar = () => router.push('/')
 </script>
 

@@ -55,18 +55,15 @@ import { onMounted, ref } from 'vue'
 const router = useRouter()
 const temProgresso = ref(false)
 
-// Novas variáveis reativas para o nome
 const nome = ref('')
 const erroNome = ref(false)
 
 onMounted(() => {
-  // Verifica se tem progresso do quiz salvo
   const salvo = localStorage.getItem('quiz_progresso')
   if (salvo) {
     temProgresso.value = true
   }
 
-  // Se o usuário já digitou o nome antes, já deixa preenchido
   const nomeSalvo = localStorage.getItem('quiz_nome_jogador')
   if (nomeSalvo) {
     nome.value = nomeSalvo
@@ -74,21 +71,18 @@ onMounted(() => {
 })
 
 const irParaQuiz = () => {
-  // Validação: Impede de prosseguir sem nome
   if (!nome.value.trim()) {
     erroNome.value = true
     return
   }
 
-  // Se passou na validação, remove o erro, salva no localStorage e muda de tela
   erroNome.value = false
   localStorage.setItem('quiz_nome_jogador', nome.value.trim())
   router.push('/quiz')
 }
 
 const irParaRanking = () => {
-  console.log('Navegando para a tela de ranking...')
-  // router.push('/ranking')
+  router.push('/ranking')
 }
 </script>
 

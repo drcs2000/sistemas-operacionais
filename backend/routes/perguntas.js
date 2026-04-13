@@ -65,4 +65,53 @@ router.post('/', async (req, res) => {
   }
 });
 
+// NOVA ROTA: Atualizar perguntas em lote
+router.put('/', async (req, res) => {
+  const perguntasParaAtualizar = Array.isArray(req.body) ? req.body : [req.body];
+
+  if (perguntasParaAtualizar.length === 0) {
+    return res.status(400).json({ erro: 'Nenhum dado enviado para atualização.' });
+  }
+
+  try {
+    const idsAtualizados = [];
+
+    for (const pergunta of perguntasParaAtualizar) {
+      const { id, enunciado, opcoes, resposta_correta, dificuldade } = pergunta;
+
+      if (!id) {
+        return res.status(400).json({ 
+          erro: 'O campo "id" é obrigatório para realizar a atualização.' 
+        });
+      }
+
+      if (!enunciado || !opcoes || resposta_correta === undefined) {
+        return res.status(400).json({ 
+          erro: `Formato inválido na pergunta ID ${id}. Faltam dados obrigatórios.` 
+        });
+      }
+
+      const difNum = dificuldade ? parseInt(dificuldade) : 3;
+
+      const result = await pool.query(
+        'UPDATE perguntas SET enunciado = $1, opcoes = $2, resposta_correta = $3, dificuldade = $4 WHERE id = $5 RETURNING id',
+        [enunciado, JSON.stringify(opcoes), resposta_correta, difNum, id]
+      );
+      
+      if (result.rowCount > 0) {
+        idsAtualizados.push(result.rows[0].id);
+      }
+    }
+
+    res.status(200).json({
+      mensagem: `${idsAtualizados.length} pergunta(s) atualizada(s) com sucesso!`,
+      ids: idsAtualizados
+    });
+
+  } catch (error) {
+    console.error("Erro no SQL ao atualizar:", error);
+    res.status(500).json({ erro: error.message });
+  }
+});
+
 module.exports = router;

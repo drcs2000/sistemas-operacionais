@@ -17,5 +17,5 @@ app.use('/api/perguntas', perguntasRoutes);
 app.use('/api/ranking', rankingRoutes);
 
 app.listen(port, () => {
-  console.log(`🚀 Servidor rodando lisinho na porta ${port}`);
+  console.log(`Servidor rodando lisinho na porta ${port}`);
 });

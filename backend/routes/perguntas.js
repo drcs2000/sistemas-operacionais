@@ -4,7 +4,21 @@ const pool = require('../config/db');
 
 router.get('/', async (req, res) => {
   try {
-    const result = await pool.query('SELECT * FROM perguntas');
+    const { dificuldade } = req.query;
+    let result;
+
+    if (dificuldade && dificuldade !== 'random') {
+      const difNum = parseInt(dificuldade);
+      
+      result = await pool.query(`
+        SELECT * FROM perguntas 
+        ORDER BY ABS(dificuldade - $1) ASC, RANDOM()
+        LIMIT 50
+      `, [difNum]);
+    } else {
+      result = await pool.query('SELECT * FROM perguntas ORDER BY RANDOM() LIMIT 50');
+    }
+
     res.json(result.rows);
   } catch (error) {
     res.status(500).json({ erro: error.message });

@@ -52,11 +52,13 @@ export const quizStore = reactive({
     }
 
     try {
-      const resposta = await api.get('/perguntas')
+      const nivelEscolhido = localStorage.getItem('quiz_dificuldade') || 3;
+
+      const resposta = await api.get(`/perguntas?dificuldade=${nivelEscolhido}`)
       let dados = resposta.data
       
-      // Embaralha apenas na primeira vez
       dados = this.embaralhar(dados)
+      
       dados.forEach(p => p.opcoes = this.embaralhar(p.opcoes))
 
       this.perguntas = dados

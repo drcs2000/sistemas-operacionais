@@ -3,7 +3,7 @@
     <div class="content-wrapper">
       <div v-if="mostrarModal" class="modal-overlay">
         <div class="modal-card">
-          <i class="mdi mdi-alert-circle-outline modal-icon"></i>
+          <i class="mdi mdi-alert-circle-outline modal-icon" />
           <h3>Reiniciar Quiz?</h3>
           <p>Todo o seu progresso atual será perdido.</p>
           <div class="modal-actions">
@@ -14,7 +14,7 @@
       </div>
 
       <div v-if="quizStore.carregando" class="card centralizado main-quiz-container">
-        <i class="mdi mdi-loading mdi-spin loading-icon"></i>
+        <i class="mdi mdi-loading mdi-spin loading-icon" />
         <h2>Buscando perguntas...</h2>
       </div>
 
@@ -22,7 +22,7 @@
         <div class="quiz-header">
           <div class="header-col header-left">
             <button @click="voltar" class="btn-home-header">
-              <i class="mdi mdi-home-variant-outline"></i>
+              <i class="mdi mdi-home-variant-outline" />
               <span class="desktop-only">Início</span>
             </button>
           </div>
@@ -31,7 +31,7 @@
             <div class="status-group">
               <span class="progresso-texto">{{ indiceAtual + 1 }}/{{ totalPerguntas }}</span>
               <span class="acertos-badge">
-                <i class="mdi mdi-check-circle-outline"></i>
+                <i class="mdi mdi-check-circle-outline" />
                 {{ acertos }}/{{ respondidas }}
               </span>
             </div>
@@ -62,7 +62,7 @@
                     :class="
                       textoExpandido ? 'mdi mdi-minus-box-outline' : 'mdi mdi-plus-box-outline'
                     "
-                  ></i>
+                  />
                   {{ textoExpandido ? ' Mostrar menos' : ' Ler completa' }}
                 </button>
               </div>
@@ -85,13 +85,13 @@
 
         <div class="card-footer">
           <button @click="mostrarModal = true" class="btn-restart-footer">
-            <i class="mdi mdi-refresh"></i> Reiniciar progresso
+            <i class="mdi mdi-refresh" /> Reiniciar progresso
           </button>
         </div>
       </div>
 
       <div v-else class="card centralizado main-quiz-container">
-        <i class="mdi mdi-trophy-outline trophy-icon"></i>
+        <i class="mdi mdi-trophy-outline trophy-icon" />
         <h1>Fim do Quiz!</h1>
         <p class="pontuacao-final">
           Você acertou <strong>{{ acertos }}</strong> de <strong>{{ respondidas }}</strong
@@ -99,10 +99,10 @@
         </p>
         <div class="final-actions">
           <button @click="confirmarReiniciar" class="btn btn-voltar-primario">
-            <i class="mdi mdi-replay"></i> Tentar Novamente
+            <i class="mdi mdi-replay" /> Tentar Novamente
           </button>
           <button @click="voltar" class="btn btn-voltar-secundario">
-            <i class="mdi mdi-home"></i> Ir para o Início
+            <i class="mdi mdi-home" /> Ir para o Início
           </button>
         </div>
       </div>
@@ -218,7 +218,7 @@ const voltar = () => router.push('/')
   justify-content: center;
   font-family: 'Inter', sans-serif;
   margin: 0;
-  overflow: hidden; /* Trava o scroll da página inteira */
+  overflow: hidden;
 }
 
 .content-wrapper {
@@ -227,7 +227,6 @@ const voltar = () => router.push('/')
   padding: 20px;
   display: flex;
   flex-direction: column;
-  /* Altura fixa (100dvh) removida daqui para não esticar no desktop */
 }
 
 .card {
@@ -238,8 +237,7 @@ const voltar = () => router.push('/')
   width: 100%;
   display: flex;
   flex-direction: column;
-  max-height: 90dvh; /* No desktop, cresce no máximo até 90% da tela */
-  /* flex: 1 removido para não forçar o esticamento quando o conteúdo for curto */
+  max-height: 90dvh;
 }
 
 /* HEADER */
@@ -333,6 +331,9 @@ const voltar = () => router.push('/')
 .dif-5 {
   color: #a855f7;
 }
+.dif-undefined {
+  color: #64748b;
+} /* Caso seja random e não tenha a tag pronta */
 
 .progress-bar-container {
   width: 100%;
@@ -355,7 +356,6 @@ const voltar = () => router.push('/')
   flex-direction: column;
   min-height: 0;
 }
-
 .question-content {
   display: flex;
   flex-direction: column;
@@ -384,7 +384,6 @@ const voltar = () => router.push('/')
   overflow-y: auto;
   min-height: 0;
 }
-
 .opcoes-container::-webkit-scrollbar {
   width: 6px;
 }
@@ -448,59 +447,6 @@ const voltar = () => router.push('/')
   justify-content: center;
   gap: 8px;
   margin: 0 auto;
-}
-
-/* =============== MOBILE =============== */
-@media (max-width: 600px) {
-  .content-wrapper {
-    padding: 0;
-    height: 100dvh; /* No mobile ele precisa ser 100% da tela */
-  }
-
-  .card.main-quiz-container {
-    border-radius: 0;
-    padding: 15px;
-    box-shadow: none;
-    flex: 1; /* Faz o card preencher o content-wrapper inteiro */
-    max-height: 100dvh;
-  }
-
-  .opcoes-container {
-    padding-bottom: 30px; /* Mais respiro para o scroll no mobile */
-  }
-
-  .desktop-only {
-    display: none;
-  }
-
-  .quiz-header {
-    margin-bottom: 15px;
-    gap: 5px;
-  }
-  .btn-home-header {
-    padding: 8px;
-  }
-  .status-group {
-    gap: 6px;
-  }
-  .progresso-texto {
-    font-size: 0.85rem;
-  }
-  .acertos-badge {
-    padding: 4px 8px;
-    font-size: 0.8rem;
-  }
-  .dificuldade-tag {
-    font-size: 0.75rem;
-    padding-left: 5px;
-  }
-  .enunciado {
-    font-size: 1.15rem;
-  }
-  .btn-opcao {
-    padding: 16px 20px;
-    font-size: 0.95rem;
-  }
 }
 
 /* Animações e Modais */
@@ -581,7 +527,7 @@ const voltar = () => router.push('/')
   margin-bottom: 15px;
 }
 
-/* ESTILIZAÇÃO DA TELA FINAL (Botoes) */
+/* ESTILIZAÇÃO DA TELA FINAL (Botoes alinhados ao novo design) */
 .final-actions {
   display: flex;
   flex-direction: column;
@@ -595,7 +541,7 @@ const voltar = () => router.push('/')
   padding: 16px 24px;
   font-size: 1.05rem;
   font-weight: 700;
-  border-radius: 16px;
+  border-radius: 12px;
   cursor: pointer;
   display: flex;
   align-items: center;
@@ -603,29 +549,29 @@ const voltar = () => router.push('/')
   gap: 10px;
   transition: all 0.2s;
   width: 100%;
-  border: none;
+  background-color: #fff;
+  border: 2px solid transparent;
 }
 
 .btn-voltar-primario {
-  background-color: #0284c7;
-  color: white;
+  border-color: #0284c7;
+  color: #0369a1;
+  background-color: #f0f9ff;
 }
 
 .btn-voltar-primario:hover {
-  background-color: #0369a1;
+  background-color: #e0f2fe;
   transform: translateY(-2px);
-  box-shadow: 0 4px 12px rgba(2, 132, 199, 0.3);
 }
 
 .btn-voltar-secundario {
-  background-color: #f1f5f9;
+  border-color: #cbd5e1;
   color: #475569;
-  border: 1px solid #e2e8f0;
 }
 
 .btn-voltar-secundario:hover {
-  background-color: #e2e8f0;
-  color: #1e293b;
+  background-color: #f1f5f9;
+  transform: translateY(-2px);
 }
 
 .trophy-icon {
@@ -633,23 +579,67 @@ const voltar = () => router.push('/')
   color: #f59e0b;
   margin-bottom: 15px;
 }
-
 .pontuacao-final {
   font-size: 1.2rem;
   color: #475569;
   margin-bottom: 10px;
 }
-
 .pontuacao-final strong {
   color: #0284c7;
 }
 
+/* =============== MOBILE =============== */
 @media (max-width: 600px) {
+  .content-wrapper {
+    padding: 0;
+    height: 100dvh;
+  }
+  .card.main-quiz-container {
+    border-radius: 0;
+    padding: 15px;
+    box-shadow: none;
+    flex: 1;
+    max-height: 100dvh;
+  }
+  .opcoes-container {
+    padding-bottom: 30px;
+  }
+  .desktop-only {
+    display: none;
+  }
+  .quiz-header {
+    margin-bottom: 15px;
+    gap: 5px;
+  }
+  .btn-home-header {
+    padding: 8px;
+  }
+  .status-group {
+    gap: 6px;
+  }
+  .progresso-texto {
+    font-size: 0.85rem;
+  }
+  .acertos-badge {
+    padding: 4px 8px;
+    font-size: 0.8rem;
+  }
+  .dificuldade-tag {
+    font-size: 0.75rem;
+    padding-left: 5px;
+  }
+  .enunciado {
+    font-size: 1.15rem;
+  }
+  .btn-opcao {
+    padding: 16px 20px;
+    font-size: 0.95rem;
+  }
+
   .final-actions {
     margin-top: auto;
     padding-bottom: 20px;
   }
-
   .btn-voltar-primario,
   .btn-voltar-secundario {
     padding: 14px 20px;
